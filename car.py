@@ -15,14 +15,16 @@ class Road:
 
 
 class Car:
-
-	def __init__(self, car_in_front):
+# How can I do location of car? internally or externally?
+# Starting with internally.  Too dificult to have these locations communicate
+	def __init__(self, car_in_front, location):
 		self.top_speed = 33  # meters per second
 		self.accelerate_rate = 2  # meters per second
 		self.decelerate_rate = 2  # meters per second
 		self.length = 5  # meters
 		self.speed = 0  # meters per second
 		self.car_in_front = car_in_front
+		self.location = location
 
 	def accelerate(self):
 		if self.speed < self.top_speed:
@@ -39,5 +41,6 @@ class Car:
 			self.speed = 0
 		return self.current_speed
 
-	def car_in_front_distance(self):
+	def move_car(self):
+		# Needs accelerate and decelerate funcs
 		pass
