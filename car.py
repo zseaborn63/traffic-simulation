@@ -17,6 +17,7 @@ class Road:
 class Car:
 # How can I do location of car? internally or externally?
 # Starting with internally.  Too dificult to have these locations communicate
+
 	def __init__(self, car_in_front, location):
 		self.top_speed = 33  # meters per second
 		self.accelerate_rate = 2  # meters per second
@@ -42,5 +43,11 @@ class Car:
 		return self.current_speed
 
 	def move_car(self):
-		# Needs accelerate and decelerate funcs
-		pass
+		self.accelerate()
+		self.decelerate()
+		self.location += self.speed
+
+
+### How to store the cars?  List?
+### What is the distance between the cars that allows for acceleration
+### How to make the car go back to the beginning of the road
