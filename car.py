@@ -73,7 +73,7 @@ class Sim:
 
 	def make_car_list(self):
 		car_list = []
-		location_list = np.linspace(0, 100, num=self.num_cars)
+		location_list = np.linspace(0, 1000, num=self.num_cars)
 		car_in_front = None
 		location = 999
 		for x in range(self.num_cars):
@@ -94,8 +94,8 @@ class Sim:
 			for x in range(len(cars_list)):
 				yyz = cars_list[x].move_car()
 				car_movement.append(yyz)
-				zzy = car_list[x].speed
+				zzy = cars_list[x].speed
 				car_speeds.append(zzy)
 			movement_list.append(car_movement)
 			speed_list.append(car_speeds)
-		return movement_list
+		return movement_list, speed_list
