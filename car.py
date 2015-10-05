@@ -8,7 +8,7 @@ import numpy as np
 class Road:
 
 	def __init__(self, length):
-		self.length = 1000  # meters
+		self.length = length # meters
 
 	def __str__(self):
 		return self.length
@@ -16,14 +16,15 @@ class Road:
 
 class Car:
 
-	def __init__(self, location, car_in_front):
-		self.top_speed = 33  # meters per second
+	def __init__(self, location, car_in_front, top_speed, road_length):
+		self.top_speed = top_speed  # meters per second
 		self.accelerate_rate = 2  # meters per second
 		self.decelerate_rate = 2  # meters per second
 		self.length = 5  # meters
 		self.speed = 0  # meters per second
 		self.car_in_front = car_in_front
-		self.location = location  # but how do I make them start at different places?
+		self.location = location
+		self.road_length = road_length
 
 	def min_distance(self):
 		return int((self.car_in_front.location - 6) - self.location)
@@ -50,34 +51,38 @@ class Car:
 			return  self.speed
 
 	def move_car(self):
-		min_distance = int((self.car_in_front.location - 6) - self.location)
+		road = Road(self.road_length)
+		min_distance = int((self.car_in_front.location - 8) - self.location)
 		if abs(min_distance) > self.speed:
 			self.accel_and_decelerate()
 			self.location += self.speed
-			if self.location > 1000:
-				self.location -= 1000
+			if self.location > road.length:
+				self.location -= road.length
 		else:
 			self.speed = self.car_in_front.speed
 			self.decelerate()
 			self.location += self.speed
-			if self.location > 1000:
-				self.location -= 1000
+			if self.location > road.length:
+				self.location -= road.length
 		return self.location
 
 
 class Sim:
 
-	def __init__(self, num_cars, time):
+	def __init__(self, num_cars, time, car_top_speed, road_length):
 		self.num_cars = num_cars
 		self.time = time
+		self.car_top_speed = car_top_speed # meters per second
+		self.road_length = road_length
 
 	def make_car_list(self):
+		road = Road(self.road_length)
 		car_list = []
-		location_list = np.linspace(0, Road.length, num=self.num_cars)
+		location_list = np.linspace(0, road.length, num=self.num_cars)
 		car_in_front = None
 		for x in range(self.num_cars):
 			location = location_list[x]
-			make_car = Car(location, car_in_front)
+			make_car = Car(location, car_in_front, self.car_top_speed, self.road_length)
 			car_list.append(make_car)
 			car_list[0].car_in_front = car_list[-1]
 			car_in_front = make_car
